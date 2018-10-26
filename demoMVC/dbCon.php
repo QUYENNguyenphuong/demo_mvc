@@ -8,12 +8,13 @@ class dbCon
     {
         if(!isset(self::$connection))
         {
-            self::$connection = new mysqli ("localhost", 'root', '', 'demo_mvc');
+            $config = parse_ini_file("config.ini");
+            self::$connection = new mysqli ("localhost", $config['username'], $config['password'], $config['databasename'] );
         }
 
-        if(self::$connection == FALSE)
+        if(self::$connection == false)
         {
-            return FALSE;
+            return false;
         }
         return self::$connection;
     }
@@ -31,9 +32,9 @@ class dbCon
     {
         $rows = array();
         $result = self::queryExecute($sqlString);
-        if($result == FALSE)
+        if($result == false)
         {
-            return FALSE;
+            return false;
         }
         while($item = $result->fetch_assoc())
         {

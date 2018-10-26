@@ -19,6 +19,16 @@ class BaseController
             require_once ($view_file);
             $content = ob_get_clean();
             require_once ('views/layouts/application.php');
+
+            ob_start();
+            require_once ("includes/_header.php");
+            $buffer=ob_get_contents();
+            ob_end_clean();
+
+            $title = "";
+            $buffer = preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $buffer);
+
+
         }
         else
         {

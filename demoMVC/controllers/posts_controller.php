@@ -22,7 +22,6 @@ class PostsController extends BaseController
         $posts = Posts::get_data();
       $data = array('posts'=> $posts );
         $this->render('index', $data);
-        return $data;
     }
     public function show()
     {
@@ -30,4 +29,5 @@ class PostsController extends BaseController
         $data = array('post' => $post);
         $this->render('show', $data);
     }
+
 }
