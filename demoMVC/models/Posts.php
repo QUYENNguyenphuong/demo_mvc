@@ -25,7 +25,6 @@ class Posts
         $this->content = $content;
     }
 
-
    public static function get_data()
    {
        $sql = 'SELECT * FROM posts';
@@ -35,7 +34,6 @@ class Posts
            $list[] = new Posts($item['Id'], $item['title'], $item['content']);
        }
        return $list;
-
    }
    public static function find($id)
    {
@@ -61,5 +59,12 @@ class Posts
        $sql = "UPDATE posts SET title = '$title' , content = '$content' WHERE Id = $id ";
        $k = dbCon::queryExecute($sql);
        return $k;
+   }
+
+   public static function insert($title, $content)
+   {
+       $sql = "INSERT INTO posts(title, content) VALUES ('$title', '$content')";
+       $result = dbCon::queryExecute($sql);
+        return $result;
    }
 }

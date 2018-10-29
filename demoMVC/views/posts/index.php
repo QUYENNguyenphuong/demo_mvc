@@ -10,5 +10,5 @@ foreach ($posts as $post)
           </li>';
 }
 echo '</ul>';
-
+echo '<a href="index.php?controller=posts&action=prepare_insert"> Insert </a>';
 

@@ -19,16 +19,21 @@ class PostsController extends BaseController
     }
     public function index()
     {
+        if(isset($_POST['btn_insert']))
+        {
+            $title = isset($_POST['title']) ? ($_POST['title']) : '';
+            $content = isset($_POST['content']) ? ($_POST['content']) : '';
+            $result =  Posts::insert($title,$content);
+        }
         $posts = Posts::get_data();
-      $data = array('posts'=> $posts );
+        $data = array('posts'=> $posts );
         $this->render('index', $data);
     }
     public function show()
     {
         if(isset($_POST['btn_edit'])) {
-            $id = isset($_GET['id']);
-            $title = isset($_POST['title']) ? ($_POST['title']) : 'hiihh';
-            $content = isset($_POST['content']) ? ($_POST['content']) : 'hahaha';
+            $title = isset($_POST['title']) ? ($_POST['title']) : '';
+            $content = isset($_POST['content']) ? ($_POST['content']) : '';
             $k =  Posts::edit($_GET['id'],$title,$content);
         }
         $post = Posts::find($_GET['id']);
@@ -41,15 +46,10 @@ class PostsController extends BaseController
         $item = Posts::find($_GET['id']);
         $data = array('item' => $item);
         $this->render('prepare_edit', $data);
-        if(isset($_POST['btn_edit']))
-        {
-            $title   = isset($_POST['title']) ? ($_POST['title']) : '';
-            $content = isset($_POST['content']) ? ($_POST['content']) : '';
-            $k =  Posts::edit((int) $_GET['id'],$title,$content);
-            if( $k == true)
-            {
-                return true;
-            }
-        }
     }
+    public function prepare_insert()
+    {
+        $this->renderNoData('prepare_insert');
+    }
+
 }
