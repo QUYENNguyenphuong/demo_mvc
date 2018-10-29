@@ -23,6 +23,7 @@ class BaseController
             {
                 $item = Posts::find($_GET['id']);
                 $title = $item->title;
+
             }
             else
             {

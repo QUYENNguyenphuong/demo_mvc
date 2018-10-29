@@ -46,4 +46,20 @@ class Posts
        }
        return $kq;
    }
+   public static function  prepare_edit($id)
+   {
+       $sql = "SELECT title, content, Id FROM posts WHERE Id = $id";
+       $items = dbCon::arraySelect($sql);
+       foreach ($items as $item)
+       {
+           $item = new Posts($item['Id'],$item['title'], $item['content']);
+       }
+       return $item;
+   }
+   public static function edit( int $id,$title, $content)
+   {
+       $sql = "UPDATE posts SET title = '$title' , content = '$content' WHERE Id = $id ";
+       $k = dbCon::queryExecute($sql);
+       return $k;
+   }
 }
