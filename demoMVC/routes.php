@@ -16,7 +16,7 @@ function call($controller, $action)
 
 $controllers = [
     'pages' => ['home','error'],
-    'posts' => ['index','show','prepare_edit','edited']
+    'posts' => ['index','show','prepare_edit']
 ];
 
 

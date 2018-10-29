@@ -1,5 +1,5 @@
 
-    <form method="post" action="index.php?controller=posts&action=edited&id=<?= $item-> id ?>">
+    <form method="post" action="index.php?controller=posts&action=show&id=<?= $item-> id ?>">
         <label>Title: </label>
         <input name="title" type="text" value="<?= $item->title ?>">
     </br>

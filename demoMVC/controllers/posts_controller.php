@@ -25,9 +25,16 @@ class PostsController extends BaseController
     }
     public function show()
     {
+        if(isset($_POST['btn_edit'])) {
+            $id = isset($_GET['id']);
+            $title = isset($_POST['title']) ? ($_POST['title']) : 'hiihh';
+            $content = isset($_POST['content']) ? ($_POST['content']) : 'hahaha';
+            $k =  Posts::edit($_GET['id'],$title,$content);
+        }
         $post = Posts::find($_GET['id']);
         $data = array('post' => $post);
         $this->render('show', $data);
+
     }
     public function prepare_edit()
     {
@@ -44,19 +51,5 @@ class PostsController extends BaseController
                 return true;
             }
         }
-    }
-    public function edited()
-    {
-        if(isset($_POST['btn_edit'])) {
-            $id = isset($_GET['id']);
-            $title = isset($_POST['title']) ? ($_POST['title']) : 'hiihh';
-            $content = isset($_POST['content']) ? ($_POST['content']) : 'hahaha';
-            $k =  Posts::edit($_GET['id'],$title,$content);
-
-        }
-        $item_edited = Posts::find($_GET['id']);
-        $data = array('item_edited' => $item_edited);
-        $this->render('edited', $data);
-
     }
 }
