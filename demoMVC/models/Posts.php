@@ -70,7 +70,7 @@ class Posts
    public static function delete($id)
    {
        $sql = "DELETE FROM posts WHERE Id = $id ";
-       $result = dbCon::queryExecute($sql);
+       $result = dbCon::arraySelect($sql);
        return $result;
    }
 }

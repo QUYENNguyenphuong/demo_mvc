@@ -20,9 +20,9 @@ if(isset($_GET['controller']))
         $action = 'index';
     }
 }
-else
+elseif($controller = 'pages')
 {
-    $controller = 'pages';
     $action = 'home';
 }
+
 require_once ('routes.php');

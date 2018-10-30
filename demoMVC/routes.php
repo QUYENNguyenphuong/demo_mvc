@@ -9,16 +9,19 @@ function call($controller, $action)
             break;
         case 'posts':
             $controller = new PostsController();
+            break;
+        case 'register':
+            $controller = new RegisterController();
+            break;
     }
 // call the action
     $controller->{$action}();
 }
-
 $controllers = [
     'pages' => ['home','error'],
-    'posts' => ['index','show','prepare_edit', 'prepare_insert', 'prepare_delete']
+    'posts' => ['index','show','prepare_edit', 'prepare_insert', 'prepare_delete'],
+    'register' => ['index','sign_up']
 ];
-
 
 if (!isset($controller, $controllers) || (!isset($action,$controllers[$controller])) )
     {
