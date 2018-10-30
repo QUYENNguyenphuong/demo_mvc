@@ -67,4 +67,10 @@ class Posts
        $result = dbCon::queryExecute($sql);
         return $result;
    }
+   public static function delete($id)
+   {
+       $sql = "DELETE FROM posts WHERE Id = $id ";
+       $result = dbCon::queryExecute($sql);
+       return $result;
+   }
 }

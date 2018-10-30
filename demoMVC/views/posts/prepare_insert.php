@@ -3,7 +3,7 @@
     <input name="title" class="text" value="">
     <br>
     <label>Content: </label>
-    <input name="content" class="text" value="">
+    <textarea rows="10" cols="50" name="content" class="text" value=""></textarea>
     <br>
     <input type="submit" value="INSERT" name="btn_insert">
 </form>

@@ -1,6 +1,6 @@
 
     <form method="post" action="index.php?controller=posts&action=show&id=<?= $item-> id ?>">
-        <label>Title: </label>
+        <label>Title:   </label>
         <input name="title" type="text" value="<?= $item->title ?>">
     </br>
         <label>Content: </label>

@@ -25,13 +25,19 @@ class PostsController extends BaseController
             $content = isset($_POST['content']) ? ($_POST['content']) : '';
             $result =  Posts::insert($title,$content);
         }
+        if(isset($_POST['btn_delete']))
+        {
+            $id = $_GET['id'];
+            $item_delete = Posts::delete($id);
+        }
         $posts = Posts::get_data();
         $data = array('posts'=> $posts );
         $this->render('index', $data);
     }
     public function show()
     {
-        if(isset($_POST['btn_edit'])) {
+        if(isset($_POST['btn_edit']))
+        {
             $title = isset($_POST['title']) ? ($_POST['title']) : '';
             $content = isset($_POST['content']) ? ($_POST['content']) : '';
             $k =  Posts::edit($_GET['id'],$title,$content);
@@ -39,7 +45,6 @@ class PostsController extends BaseController
         $post = Posts::find($_GET['id']);
         $data = array('post' => $post);
         $this->render('show', $data);
-
     }
     public function prepare_edit()
     {
@@ -49,7 +54,6 @@ class PostsController extends BaseController
     }
     public function prepare_insert()
     {
-        $this->renderNoData('prepare_insert');
+        $this->render('prepare_insert');
     }
-
 }
