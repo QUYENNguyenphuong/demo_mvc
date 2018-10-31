@@ -8,6 +8,9 @@
     <label>Password: </label>
     <input type="password" name="password" size="40">
     <br>
+    <label>Email: </label>
+    <input type="text" name="email" size="40">
+    <br>
     <label>Level: </label>
     <select name="level">
         <option value="0" > User </option>

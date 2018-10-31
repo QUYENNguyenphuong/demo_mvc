@@ -20,8 +20,9 @@ if(isset($_GET['controller']))
         $action = 'index';
     }
 }
-elseif($controller = 'pages')
+else
 {
+    $controller = 'pages';
     $action = 'home';
 }
 

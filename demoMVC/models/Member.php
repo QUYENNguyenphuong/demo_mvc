@@ -11,6 +11,7 @@ class Member
     public $id;
     public $username;
     public $password;
+    public $email;
     public $level;
 
     /**
@@ -18,24 +19,35 @@ class Member
      * @param $id
      * @param $username
      * @param $password
+     * @param $email
      * @param $level
      */
-    public function __construct($id, $username, $password, $level)
+    public function __construct($id, $username, $password,$email, $level)
     {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
+        $this->email = $email;
         $this->level = $level;
     }
-    public function get_data()
+    public static function get_data($username)
     {
-        $sql = 'SELECT * FROM member';
+        $sql = "SELECT * FROM member WHERE username= '$username'";
         $query = dbCon::arraySelect($sql);
         $list = [];
         foreach ($query as $item) {
-            $list[] = new Member($item['id'], $item['username'], $item['password'], $item['level']);
+            $list[] = new Member($item['id'], $item['username'], $item['password'],$item['email'], $item['level']);
         }
         return $list;
+    }
+    public static function find_user($username)
+    {
+        $sql = "SELECT * FROM member WHERE username = '$username'";
+        $items = dbCon::arraySelect($sql);
+        foreach ($items as $item) {
+            $kq = new Member($item['id'], $item['username'], $item['password'], $item['email'], $item['level']);
+        }
+        return $kq;
     }
     public static function check_user($username)
     {
@@ -43,9 +55,9 @@ class Member
         $query = dbCon::arraySelect($sql);
         return $query;
     }
-    public static function add_member($username, $password, $level)
+    public static function add_member($username, $password,$email, $level)
     {
-        $sql = "INSERT INTO member(username, password, level) VALUES ('$username', '$password', '$level')";
+        $sql = "INSERT INTO member(username, password, email, level) VALUES ('$username', '$password','$email', '$level')";
         $result = dbCon::queryExecute($sql);
         return $result;
     }
@@ -61,8 +73,16 @@ class Member
         $query = dbCon::arraySelect($sql);
         return $query;
     }
-
-
-
-
+    public static function check_password($username,$password)
+    {
+        $sql = "SELECT * FROM member WHERE username = '$username' and  password = '$password'";
+        $query = dbCon::arraySelect($sql);
+        return $query;
+    }
+    public static function change_password($username, $password)
+    {
+        $sql = "UPDATE member SET password = '$password'  WHERE username = '$username' ";
+        $k = dbCon::queryExecute($sql);
+        return $k;
+    }
 }

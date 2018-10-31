@@ -24,8 +24,7 @@ class BaseController
                 $item = Posts::find($_GET['id']);
                 $title = $item->title;
             }
-            else
-            {
+            else {
                 $title = "Demo_PHP_MVC";
             }
             require_once ('views/layouts/application.php');
@@ -35,5 +34,4 @@ class BaseController
             header('Location:index.php?controller=pages&action=error');
         }
     }
-
 }

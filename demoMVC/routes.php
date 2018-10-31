@@ -20,7 +20,7 @@ function call($controller, $action)
 $controllers = [
     'pages' => ['home','error'],
     'posts' => ['index','show','prepare_edit', 'prepare_insert', 'prepare_delete'],
-    'register' => ['index','sign_up']
+    'register' => ['index','sign_up','login','user','admin','pre_change_pass', 'change_password']
 ];
 
 if (!isset($controller, $controllers) || (!isset($action,$controllers[$controller])) )
