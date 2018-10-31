@@ -14,3 +14,6 @@ foreach ($posts as $post)
 }
 echo '</ul>';echo '<a href="index.php?controller=posts&action=prepare_insert"> Insert </a>';
 
+?>
+<br>
+Go to register page:  <a href="index.php?controller=register"> Register </a>

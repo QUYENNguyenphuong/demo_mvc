@@ -9,3 +9,6 @@ if(isset($this->msg)) {
     echo $this->msg;
     echo '<br>';
 }
+?>
+<br>
+<a href="index.php?controller=register"> index </a>

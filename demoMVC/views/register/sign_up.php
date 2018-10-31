@@ -13,8 +13,8 @@
     <br>
     <label>Level: </label>
     <select name="level">
-        <option value="0" > User </option>
-        <option value="1"> Admin</option>
+        <option  value="user" > User </option>
+        <option value="admin"> Admin</option>
     </select>
     <br>
     <input type="submit" value="Sign up" name="btn_signup">
@@ -24,4 +24,8 @@
 if(isset($this->msg)){
     echo $this->msg;
     echo '<br>';
-}
+}?>
+<br>
+Already have an account? <a href="index.php?controller=register&action=login"> Login </a>
+<br>
+<a href="index.php?controller=register"> index </a>

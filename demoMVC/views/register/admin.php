@@ -5,3 +5,6 @@ if(isset($this->msg)){
 }
 echo '<a href="index.php?controller=posts&action=index"> Post </a>';
 echo '<br>';
+?>
+<br>
+<a href="index.php?controller=register"> index </a>

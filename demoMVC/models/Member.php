@@ -63,7 +63,7 @@ class Member
     }
     public static function check_admin($username)
     {
-        $sql = "SELECT * FROM member WHERE username='$username' and level = '1'  ";
+        $sql = "SELECT * FROM member WHERE username='$username' and level = 'admin'  ";
         $kq = dbCon::arraySelect($sql);
         return $kq;
     }

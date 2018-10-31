@@ -23,11 +23,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `password` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `email` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `level` tinyint(1) UNSIGNED NULL DEFAULT NULL,
+  `username` varchar(100)  NULL DEFAULT NULL,
+  `password` varchar(100) NULL DEFAULT NULL,
+  `email` varchar(100)  NULL DEFAULT NULL,
+  `level` varchar(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB  CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ;
 
 SET FOREIGN_KEY_CHECKS = 1;

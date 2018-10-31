@@ -14,3 +14,8 @@ if(isset($this->msg)){
     echo $this->msg;
     echo '<br>';
 }
+?>
+<br>
+Don't have an account ? <a href="index.php?controller=register&action=sign_up"> Sign Up </a>
+<br>
+<a href="index.php?controller=register"> index </a>

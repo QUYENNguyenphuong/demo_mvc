@@ -21,11 +21,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for posts
 -- ----------------------------
 DROP TABLE IF EXISTS `posts`;
-CREATE TABLE `posts`  (
+CREATE TABLE `posts` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `content` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `title` varchar(255) NULL DEFAULT NULL,
+  `content` text NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

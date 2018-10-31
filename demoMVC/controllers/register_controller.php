@@ -16,7 +16,7 @@ class RegisterController extends BaseController
         $this->render('index');
     }
     function is_email($str) {
-        return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? FALSE : TRUE;
+        return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? false : true;
     }
     public function sign_up()
     {
@@ -25,7 +25,7 @@ class RegisterController extends BaseController
             $username = isset($_POST['username']) ? ($_POST['username']) : '';
             $password = isset($_POST['password']) ? ($_POST['password']) : '';
             $email = isset($_POST['email']) ? ($_POST['email']) : '';
-            $level    = isset($_POST['level'])    ? (int)$_POST['level'] : '';
+            $level    = isset($_POST['level'])  ? $_POST['level'] : '';
             if(!$username || !$password ||!$email || !$level)
             {
                 $this->msg = "Please provide your informations!";
@@ -128,7 +128,7 @@ class RegisterController extends BaseController
         }
         $items = Member::find_user($_GET['username']);
         $data = array('items'=> $items);
-        $this->render('user', $data);
+        $this->render('pre_change_pass', $data);
     }
 }
 ?>

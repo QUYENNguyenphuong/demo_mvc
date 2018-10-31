@@ -7,3 +7,4 @@
     <br>
     <input type="submit" value="INSERT" name="btn_insert">
 </form>
+<a href="index.php?controller=posts"> Post page </a>
