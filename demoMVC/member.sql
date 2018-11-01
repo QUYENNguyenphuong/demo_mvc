@@ -25,9 +25,10 @@ CREATE TABLE `member`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(100)  NULL DEFAULT NULL,
   `password` varchar(100) NULL DEFAULT NULL,
-  `level` varchar(20) NULL DEFAULT NULL,
+  `level` int(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB  CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ;
 SET FOREIGN_KEY_CHECKS = 1;
 
-ALTER TABLE `member` 	ADD COLUMN email varchar(100) NULL DEFAULT NULL;
+ALTER TABLE `member` 	ADD COLUMN email varchar(100) NULL DEFAULT NULL,
+  MODIFY `level` varchar(20) NULL DEFAULT NULL
