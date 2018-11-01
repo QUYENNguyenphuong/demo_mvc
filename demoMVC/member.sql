@@ -31,4 +31,4 @@ CREATE TABLE `member`  (
 SET FOREIGN_KEY_CHECKS = 1;
 
 ALTER TABLE `member` 	ADD COLUMN email varchar(100) NULL DEFAULT NULL,
-  MODIFY `level` varchar(20) NULL DEFAULT NULL
+  MODIFY `level` varchar(20) NULL DEFAULT NULL;

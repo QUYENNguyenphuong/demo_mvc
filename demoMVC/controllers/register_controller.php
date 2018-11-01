@@ -4,6 +4,7 @@ require_once "controllers/base_controller.php";
 require_once "models/Member.php";
 class RegisterController extends BaseController
 {
+    public $msg;
     /**
      * RegisterController constructor.
      */
@@ -44,6 +45,7 @@ class RegisterController extends BaseController
                     if ($item_insert == true) {
                         $this->msg = "Sign up success!";
                         $this->render('index');
+                        return;
                     }
                 }
             }
@@ -119,15 +121,19 @@ class RegisterController extends BaseController
                     //$this->msg = "Your Password is updated Successfully.";
                     $items = Member::get_data($username);
                     $data = array('$items'=> $items);
-//                  $this->render('user', $items);
-
+//                    $this->render('user', $data);
+//                    return;
                  header('Location:index.php?controller=register&action=user&username='.$username);
                 }
             }
-           $items = Member::get_data($_GET['username']);
+            $items = Member::get_data($_GET['username']);
             $data = array('items' => $items);
             $this->render('pre_change_pass', $data);
+            return;
             }
+        $items = Member::get_data($_GET['username']);
+        $data = array('items'=> $items);
+        $this->render('user', $data);
     }
 }
 ?>
