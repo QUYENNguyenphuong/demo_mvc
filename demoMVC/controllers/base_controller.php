@@ -19,6 +19,9 @@ class BaseController
             ob_start();
             require_once ($view_file);
             $content = ob_get_clean();
+
+//            echo "Render"; die($content);
+
             if($view_file == 'views/posts/show.php')
             {
                 $item = Posts::find($_GET['id']);
@@ -27,7 +30,8 @@ class BaseController
             else {
                 $title = "Demo_PHP_MVC";
             }
-            require_once ('views/layouts/application.php');
+
+          require_once ('views/layouts/application.php');
         }
         else
         {

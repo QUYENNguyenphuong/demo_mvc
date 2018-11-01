@@ -1,8 +1,6 @@
 <?php
-if(isset($this->msg)){
-    echo $this->msg;
-    echo '<br>';
-}
+echo '<lable> Page Admin</lable>';
+echo '<br>';
 echo '<a href="index.php?controller=posts&action=index"> Post </a>';
 echo '<br>';
 ?>

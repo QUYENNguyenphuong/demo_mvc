@@ -56,7 +56,6 @@ class RegisterController extends BaseController
         {
             $username = isset($_POST['username']) ? $_POST['username'] : '';
             $password = isset($_POST['password']) ? $_POST['password'] : '';
-            //$level    = isset($_POST['level'])    ? $_POST['level'] : '';
             $admin_login = Member::check_admin($username);
             if(!$username || !$password)
             {
@@ -72,9 +71,7 @@ class RegisterController extends BaseController
                 {
                     if($admin_login)
                     {
-                        $_SESSION['username'] = $username;
-                        $this->msg = "Hello admin $username  ";
-                        $this->render('admin');
+                        header('Location:index.php?controller=register&action=admin');
                     }
                     else
                     {
@@ -83,6 +80,8 @@ class RegisterController extends BaseController
                         $items = Member::get_data($username);
                         $data = array('items'=> $items);
                         $this->render('user', $data);
+                        return;
+//                        header('Location:index.php?controller=register&action=user');
                     }
                 }
             }
@@ -94,6 +93,12 @@ class RegisterController extends BaseController
         $items = Member::get_data($_GET['username']);
         $data = array('items' => $items);
         $this->render('pre_change_pass', $data);
+        //$this->render('index', $data);
+
+    }
+    public function admin()
+    {
+        $this->render('admin');
     }
     public function user()
     {
@@ -111,13 +116,14 @@ class RegisterController extends BaseController
             } else {
                 $change_pass = Member::change_password($username, $newpassword);
                 if ($change_pass == true) {
-                    $this->msg = "Your Password is updated Successfully.";
+                    //$this->msg = "Your Password is updated Successfully.";
                     $items = Member::get_data($username);
-                    $data = array('items' => $items);
-                    $this->render('user', $data);
+                    $data = array('$items'=> $items);
+//                  $this->render('user', $items);
+
+                 header('Location:index.php?controller=register&action=user&username='.$username);
                 }
             }
-
            $items = Member::get_data($_GET['username']);
             $data = array('items' => $items);
             $this->render('pre_change_pass', $data);
