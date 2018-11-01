@@ -40,15 +40,6 @@ class Member
         }
         return $list;
     }
-    public static function find_user($username)
-    {
-        $sql = "SELECT * FROM member WHERE username = '$username'";
-        $items = dbCon::arraySelect($sql);
-        foreach ($items as $item) {
-            $kq = new Member($item['id'], $item['username'], $item['password'], $item['email'], $item['level']);
-        }
-        return $kq;
-    }
     public static function check_user($username)
     {
         $sql = "SELECT * FROM member WHERE username = '$username'";

@@ -91,44 +91,37 @@ class RegisterController extends BaseController
     }
     public function pre_change_pass()
     {
-        $item = Member::find_user($_GET['username']);
-        $data = array('item' => $item);
+        $items = Member::get_data($_GET['username']);
+        $data = array('items' => $items);
         $this->render('pre_change_pass', $data);
     }
     public function user()
     {
-        if (isset($_POST['btn_submit']))
-        {
+        if (isset($_POST['btn_submit'])) {
             $username = $_GET['username'];
             $oldpassword = isset($_POST['oldpassword']) ? $_POST['oldpassword'] : '';
             $newpassword = isset($_POST['newpassword']) ? $_POST['newpassword'] : '';
             $confirmpassword = isset($_POST['confirmpassword']) ? $_POST['confirmpassword'] : '';
-            $check_pass = Member::check_password($username,$oldpassword);
-            if(!$check_pass)
-            {
+            $check_pass = Member::check_password($username, $oldpassword);
+            if (!$check_pass) {
                 $this->msg = "Invalid password";
-                $this->render('pre_change_pass');
-            }
-            elseif( $newpassword != $confirmpassword )
-            {
+
+            } elseif ($newpassword != $confirmpassword) {
                 $this->msg = "Wrong confirm password!";
-                $this->render('pre_change_pass');
-            }
-            else
-            {
-                $change_pass = Member::change_password($username,$newpassword);
-                if($change_pass == true)
-                {
+            } else {
+                $change_pass = Member::change_password($username, $newpassword);
+                if ($change_pass == true) {
                     $this->msg = "Your Password is updated Successfully.";
                     $items = Member::get_data($username);
-                    $data = array('items'=> $items);
+                    $data = array('items' => $items);
                     $this->render('user', $data);
                 }
             }
-        }
-        $items = Member::find_user($_GET['username']);
-        $data = array('items'=> $items);
-        $this->render('pre_change_pass', $data);
+
+           $items = Member::get_data($_GET['username']);
+            $data = array('items' => $items);
+            $this->render('pre_change_pass', $data);
+            }
     }
 }
 ?>

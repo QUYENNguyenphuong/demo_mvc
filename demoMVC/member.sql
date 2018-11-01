@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for member
 -- ----------------------------
 DROP TABLE IF EXISTS `member`;
-CREATE TABLE `member`  (
+ALTER TABLE `member`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(100)  NULL DEFAULT NULL,
   `password` varchar(100) NULL DEFAULT NULL,
