@@ -1,8 +1,12 @@
+<label> Admin Page </label>
 <?php
-echo '<lable> Page Admin</lable>';
-echo '<br>';
-echo '<a href="index.php?controller=posts&action=index"> Post </a>';
-echo '<br>';
+if(isset($_GET['login']) and  ($_GET['login']== 'success'))
+{
+    $msg = "Admin login successfully";
+    echo '<p>'.$msg.'</p>';
+}
 ?>
+<br>
+<a href="index.php?controller=posts&action=index"> Post </a>
 <br>
 <a href="index.php?controller=register"> index </a>

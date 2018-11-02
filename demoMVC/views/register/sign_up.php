@@ -2,8 +2,6 @@
 <form action="index.php?controller=register&action=sign_up" method="post">
     <label>User name: </label>
     <input type="text" name="username" size="40">
-    <?php if(isset($this->error))
-        echo $this->error ?>
     <br>
     <label>Password: </label>
     <input type="password" name="password" size="40">
@@ -24,7 +22,8 @@
 if(isset($this->msg)){
     echo $this->msg;
     echo '<br>';
-}?>
+}
+?>
 <br>
 Already have an account? <a href="index.php?controller=register&action=login"> Login </a>
 <br>

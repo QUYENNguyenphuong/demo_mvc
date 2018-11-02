@@ -4,7 +4,6 @@ require_once "controllers/base_controller.php";
 require_once "models/Member.php";
 class RegisterController extends BaseController
 {
-    public $msg;
     /**
      * RegisterController constructor.
      */
@@ -73,7 +72,7 @@ class RegisterController extends BaseController
                 {
                     if($admin_login)
                     {
-                        header('Location:index.php?controller=register&action=admin');
+                        header('Location:index.php?controller=register&action=admin&login=success');
                     }
                     else
                     {
@@ -118,12 +117,11 @@ class RegisterController extends BaseController
             } else {
                 $change_pass = Member::change_password($username, $newpassword);
                 if ($change_pass == true) {
-                    //$this->msg = "Your Password is updated Successfully.";
                     $items = Member::get_data($username);
                     $data = array('$items'=> $items);
 //                    $this->render('user', $data);
 //                    return;
-                 header('Location:index.php?controller=register&action=user&username='.$username);
+                 header('Location:index.php?controller=register&action=user&username='.$username.'&msg');
                 }
             }
             $items = Member::get_data($_GET['username']);
