@@ -4,4 +4,4 @@
 </br>
 <a href="index.php?controller=posts&action=prepare_edit&id=<?= $post->id; ?>" > Edit </a>
 <br>
-<a href="index.php?controller=posts&action=prepare_insert"> Post page </a>
+<a href="index.php?controller=posts"> Post page </a>

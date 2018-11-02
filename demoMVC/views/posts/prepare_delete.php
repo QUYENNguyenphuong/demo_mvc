@@ -1,4 +1,3 @@
-
 <form method="post" action="index.php?controller=posts&action=show&id=<?php $item_delete->id ?>">
     <label>Title:   </label>
     <input name="title" type="text" value="<?= $item_delete->title ?>">
