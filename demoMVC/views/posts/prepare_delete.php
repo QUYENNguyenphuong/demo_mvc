@@ -8,4 +8,3 @@
     </br>
     <input type="submit" name="btn_delete" value="Delete">
 </form>
-<?php var_dump($item_delete)?>
