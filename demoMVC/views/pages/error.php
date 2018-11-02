@@ -1,3 +1,1 @@
-<?php
-echo "ERROR!";
-?>
+<p>ERROR!</p>

@@ -1,4 +1,3 @@
-<?php
-    echo "Home Page".'<br>';
-    echo "My name is $name. I'm $age ";
-?>
+<p>Home Page</p>
+
+<p>My name is <?= $data["name"]?>. I'm <?= $data["age"]?> </p>
