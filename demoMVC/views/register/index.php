@@ -8,5 +8,7 @@ if(isset($this->msg)){
 <br>
 <a href="index.php?controller=register&action=login"> Login </a>
 <br>
+<a href="index.php?controller=register&action=logout"> Logout </a>
+<br>
 <br>
 Go to Post page <a href="index.php?controller=posts"> Post </a>

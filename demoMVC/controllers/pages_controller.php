@@ -13,6 +13,7 @@ class PageController extends BaseController
      */
     public function __construct()
     {
+        parent::__construct();
         $this->folder = 'pages';
     }
     public function home()

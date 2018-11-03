@@ -9,6 +9,7 @@ class RegisterController extends BaseController
      */
     public function __construct()
     {
+        parent::__construct();
         $this->folder = 'register';
     }
     public function index()
@@ -61,29 +62,32 @@ class RegisterController extends BaseController
             if(!$username || !$password)
             {
                 $this->msg = "Please provide your informations !";
+                return false;
             }
             else {
                 $user_login = Member::login($username, $password);
                 if (!$user_login)
                 {
-                    $this->msg = "Login failed!  ";
+                    $this->msg = "Login failed! ";
                 }
                 else
                 {
                     if($admin_login)
                     {
-                        header('Location:index.php?controller=register&action=admin&login=success');
+                        $items = Member::get_data($username);
+                        $data = array('items'=> $items);
+                        header('Location:index.php?controller=register&action=admin&username='.$username.'&login=success');
                     }
                     else
                     {
-                        $_SESSION['username'] = $username;
-                        $this->msg = "Hello $username";
                         $items = Member::get_data($username);
                         $data = array('items'=> $items);
-                        $this->render('user', $data);
-                        return;
-//                        header('Location:index.php?controller=register&action=user');
+//                        $this->render('user', $data);
+//                        return;
+                        header('Location:index.php?controller=register&action=user&username='.$username.'&login=success');
                     }
+                    $_SESSION['name'] = $username;
+                    $_SESSION["logged"] = true;
                 }
             }
         }
@@ -121,7 +125,7 @@ class RegisterController extends BaseController
                     $data = array('$items'=> $items);
 //                    $this->render('user', $data);
 //                    return;
-                 header('Location:index.php?controller=register&action=user&username='.$username.'&msg');
+                 header('Location:index.php?controller=register&action=user&username='.$username.'&change_pass=success');
                 }
             }
             $items = Member::get_data($_GET['username']);
@@ -132,6 +136,11 @@ class RegisterController extends BaseController
         $items = Member::get_data($_GET['username']);
         $data = array('items'=> $items);
         $this->render('user', $data);
+    }
+    public function logout()
+    {
+        $_SESSION["logged"] = false;
+        $this->render('index');
     }
 }
 ?>

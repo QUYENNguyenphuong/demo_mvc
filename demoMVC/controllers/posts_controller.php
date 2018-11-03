@@ -15,6 +15,7 @@ class PostsController extends BaseController
      */
     public function __construct()
     {
+        parent::__construct();
         $this->folder = 'posts';
     }
     public function index()

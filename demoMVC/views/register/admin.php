@@ -2,11 +2,11 @@
 <?php
 if(isset($_GET['login']) and  ($_GET['login']== 'success'))
 {
-    $msg = "Admin login successfully";
+    $msg = 'Admin '.$_GET['username'].' login successful';
     echo '<p>'.$msg.'</p>';
 }
 ?>
 <br>
 <a href="index.php?controller=posts&action=index"> Post </a>
 <br>
-<a href="index.php?controller=register"> index </a>
+<a href="index.php?controller=register&action=index"> index </a>
