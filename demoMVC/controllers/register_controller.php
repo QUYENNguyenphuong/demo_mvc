@@ -77,6 +77,8 @@ class RegisterController extends BaseController
                 }
                 else
                 {
+                    $_SESSION['name'] = $username;
+                    $_SESSION["logged"] = true;
                     if($admin_login)
                     {
                         $items = Member::get_data($username);
@@ -91,8 +93,6 @@ class RegisterController extends BaseController
 //                        return;
                         header('Location:index.php?controller=register&action=user&username='.$username.'&login=success');
                     }
-                    $_SESSION['name'] = $username;
-                    $_SESSION["logged"] = true;
                 }
             }
         }

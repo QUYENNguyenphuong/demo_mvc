@@ -1,14 +1,16 @@
 <label> Admin Page </label>
 <?php
-if(isset($_GET['login']) and  ($_GET['login']== 'success'))
-{
-    $msg = 'Admin '.$_SESSION['name'].' login successful';
-    echo '<p>'.$msg.'</p>';
-    echo '<p>YOUR INFORMATION</p>';
-    foreach ($items as $item)
+foreach ($items as $item) {
+    if (isset($_GET['login']) && ($_GET['login'] == 'success') && $_SESSION['name'] == $item->username) {
+        $msg = 'Admin ' . $_SESSION['name'] . ' login successful';
+        echo '<p>' . $msg . '</p>';
+        echo '<p>YOUR INFORMATION</p>';
+        echo '<p>Level: ' . $item->level . ' </p>';
+        echo '<p>Email: ' . $item->email . ' </p>';
+    }
+    else
     {
-        echo '<p>Level: '.$item->level .' </p>';
-        echo '<p>Email: '.$item->email .' </p>';
+        header('Location:index.php?controller=pages&action=error');
     }
 }
 ?>
