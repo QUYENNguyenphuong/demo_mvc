@@ -21,6 +21,7 @@ class BaseController
         if(is_file($view_file))
         {
             extract($data);
+//            die($abc);
             ob_start();
             require_once ($view_file);
             $content = ob_get_clean();

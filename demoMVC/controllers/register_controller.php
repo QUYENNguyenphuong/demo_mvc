@@ -18,6 +18,7 @@ class RegisterController extends BaseController
             $items = Member::get_data($_SESSION['name']);
             $data = array('items' => $items);
             $this->render('index', $data);
+            return;
         }
         else
             $this->render('index');
@@ -27,36 +28,35 @@ class RegisterController extends BaseController
     }
     public function sign_up()
     {
-        if(isset($_POST['btn_signup']))
-        {
-            $username = isset($_POST['username']) ? ($_POST['username']) : '';
-            $password = isset($_POST['password']) ? ($_POST['password']) : '';
-            $email = isset($_POST['email']) ? ($_POST['email']) : '';
-            $level    = isset($_POST['level'])  ? $_POST['level'] : '';
-            if(!$username || !$password ||!$email || !$level)
-            {
-                $this->msg = "Please provide your informations!";
-            }
-            else {
-                $check_name = Member::check_user($username);
-                if ($check_name) {
-                    $this->msg = "This username is already used. Please try another username";
-                }
-                elseif (!$this->is_email($email))
-                {
-                    $this->msg = "Invalid email";
-                }
-                else {
-                    $item_insert = Member::add_member($username, $password,$email, $level);
-                    if ($item_insert == true) {
-                        $this->msg = "Sign up success!";
-                        $this->render('index');
-                        return;
+        if(!isset($_SESSION["logged"]) || $_SESSION["logged"]== false ) {
+            if (isset($_POST['btn_signup'])) {
+                $username = isset($_POST['username']) ? ($_POST['username']) : '';
+                $password = isset($_POST['password']) ? ($_POST['password']) : '';
+                $email = isset($_POST['email']) ? ($_POST['email']) : '';
+                $level = isset($_POST['level']) ? $_POST['level'] : '';
+                if (!$username || !$password || !$email || !$level) {
+                    $this->msg = "Please provide your informations!";
+                } else {
+                    $check_name = Member::check_user($username);
+                    if ($check_name) {
+                        $this->msg = "This username is already used. Please try another username";
+                    } elseif (!$this->is_email($email)) {
+                        $this->msg = "Invalid email";
+                    } else {
+                        $item_insert = Member::add_member($username, $password, $email, $level);
+                        if ($item_insert == true) {
+                            $this->msg = "Sign up success!";
+                            $this->render('index');
+                            return;
+                        }
                     }
                 }
             }
+            $this->render('sign_up');
+            return;
         }
-        $this->render('sign_up');
+        header('Location:index.php?controller=pages&action=error');
+
     }
     public function  login()
     {
