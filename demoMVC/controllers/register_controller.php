@@ -55,137 +55,165 @@ class RegisterController extends BaseController
             $this->render('sign_up');
             return;
         }
-        header('Location:index.php?controller=pages&action=error');
+        elseif(Member::check_admin($_SESSION['name']))
+        {
+            header('Location:index.php?controller=register&action=admin');
+        }
+        else
+            header('Location:index.php?controller=register&action=user');
 
     }
     public function  login()
     {
-        if(isset($_POST['btn_login']))
-        {
-            $username = isset($_POST['username']) ? $_POST['username'] : '';
-            $password = isset($_POST['password']) ? $_POST['password'] : '';
-            if(!$username || !$password)
-            {
-                $this->msg = "Please provide your informations !";
-            }
-            else {
-                $user_login = Member::login($username, $password);
-                if (!$user_login)
-                {
-                    $this->msg = "Login failed! ";
-                }
-                else
-                {
-                    $_SESSION['name'] = $username;
-                    $_SESSION["logged"] = true;
-                    $admin_login = Member::check_admin($_SESSION['name']);
-                    if($admin_login) {
-                        $items = Member::get_data($_SESSION['name']);
-                        $data = array('items' => $items);
-                        header('Location:index.php?controller=register&action=admin');
-                    }
-                    else
-                    {
-                        $items = Member::get_data($_SESSION['name']);
-                        $data = array('items'=> $items);
-                        header('Location:index.php?controller=register&action=user');
+        if (!isset($_SESSION["logged"]) || $_SESSION["logged"] == false) {
+            if (isset($_POST['btn_login'])) {
+                $username = isset($_POST['username']) ? $_POST['username'] : '';
+                $password = isset($_POST['password']) ? $_POST['password'] : '';
+                if (!$username || !$password) {
+                    $this->msg = "Please provide your informations !";
+                } else {
+                    $user_login = Member::login($username, $password);
+                    if (!$user_login) {
+                        $this->msg = "Login failed! ";
+                    } else {
+                        $_SESSION['name'] = $username;
+                        $_SESSION["logged"] = true;
+                        $admin_login = Member::check_admin($_SESSION['name']);
+                        if ($admin_login) {
+                            $items = Member::get_data($_SESSION['name']);
+                            $data = array('items' => $items);
+                            header('Location:index.php?controller=register&action=admin');
+                        } else {
+                            $items = Member::get_data($_SESSION['name']);
+                            $data = array('items' => $items);
+                            header('Location:index.php?controller=register&action=user');
+                        }
                     }
                 }
             }
+            $this->render('login');
         }
-        $this->render('login');
+        elseif(Member::check_admin($_SESSION['name']))
+        {
+            header('Location:index.php?controller=register&action=admin');
+        }
+        else
+            header('Location:index.php?controller=register&action=user');
     }
     public function pre_change_pass()
     {
-        $items = Member::get_data($_SESSION['name']);
-        $data = array('items' => $items);
-        $this->render('pre_change_pass', $data);
-        //$this->render('index', $data);
+        if(isset($_SESSION["logged"]) && $_SESSION["logged"] == true)
+        {
+            $items = Member::get_data($_SESSION['name']);
+            $data = array('items' => $items);
+            $this->render('pre_change_pass', $data);
+            return;
+        }
+        else
+        {
+            header('Location:index.php?controller=pages&action=error');
+        }
+
 
     }
     public function admin()
     {
-        if (isset($_POST['btn_submit'])) {
-            $username = $_SESSION['name'];
-            $oldpassword = isset($_POST['oldpassword']) ? $_POST['oldpassword'] : '';
-            $newpassword = isset($_POST['newpassword']) ? $_POST['newpassword'] : '';
-            $confirmpassword = isset($_POST['confirmpassword']) ? $_POST['confirmpassword'] : '';
-            $check_pass = Member::check_password($username, $oldpassword);
-            if (!$oldpassword || !$newpassword || !$confirmpassword) {
-                $this->msg = "Please provide your informations!";
-            }
-            else
-            {
-                if (!$check_pass)
-                {
-                    $this->msg = "Invalid password";
+        if(isset($_SESSION["logged"]) && $_SESSION["logged"] == true)
+        {
+            if (isset($_POST['btn_submit'])) {
+                $username = $_SESSION['name'];
+                $oldpassword = isset($_POST['oldpassword']) ? $_POST['oldpassword'] : '';
+                $newpassword = isset($_POST['newpassword']) ? $_POST['newpassword'] : '';
+                $confirmpassword = isset($_POST['confirmpassword']) ? $_POST['confirmpassword'] : '';
+                $check_pass = Member::check_password($username, $oldpassword);
+                if (!$oldpassword || !$newpassword || !$confirmpassword) {
+                    $this->msg = "Please provide your informations!";
+                } else {
+                    if (!$check_pass) {
+                        $this->msg = "Invalid password";
 
-                }
-                elseif ($newpassword != $confirmpassword)
-                    {
+                    } elseif ($newpassword != $confirmpassword) {
                         $this->msg = "Wrong confirm password!";
-                    }
-                else
-                    {
-                    $change_pass = Member::change_password($username, $newpassword);
-                    if ($change_pass == true) {
-                        $items = Member::get_data($username);
-                        $data = array('$items' => $items);
-                        header('Location:index.php?controller=register&action=admin&change_pass=success');
+                    } else {
+                        $change_pass = Member::change_password($username, $newpassword);
+                        if ($change_pass == true) {
+                            $items = Member::get_data($username);
+                            $data = array('$items' => $items);
+                            header('Location:index.php?controller=register&action=admin&change_pass=success');
+                        }
                     }
                 }
+                $items = Member::get_data($_SESSION['name']);
+                $data = array('items' => $items);
+                $this->render('pre_change_pass', $data);
+                return;
             }
             $items = Member::get_data($_SESSION['name']);
             $data = array('items' => $items);
-            $this->render('pre_change_pass', $data);
+            $this->render('admin', $data);
             return;
         }
-        $items = Member::get_data($_SESSION['name']);
-        $data = array('items'=> $items);
-        $this->render('admin',$data);
+        else
+        {
+            header('Location:index.php?controller=pages&action=error');
+        }
     }
     public function user()
     {
-        if (isset($_POST['btn_submit'])) {
-            $username = $_SESSION['name'];
-            $oldpassword = isset($_POST['oldpassword']) ? $_POST['oldpassword'] : '';
-            $newpassword = isset($_POST['newpassword']) ? $_POST['newpassword'] : '';
-            $confirmpassword = isset($_POST['confirmpassword']) ? $_POST['confirmpassword'] : '';
-            $check_pass = Member::check_password($username, $oldpassword);
-            if(!$oldpassword || !$newpassword ||!$confirmpassword)
-            {
-                $this->msg = "Please provide your informations!";
-            }
-            else {
-                if (!$check_pass) {
-                    $this->msg = "Invalid password";
-
-                } elseif ($newpassword != $confirmpassword) {
-                    $this->msg = "Wrong confirm password!";
+        if (isset($_SESSION["logged"]) && $_SESSION["logged"] == true) {
+            if (isset($_POST['btn_submit'])) {
+                $username = $_SESSION['name'];
+                $oldpassword = isset($_POST['oldpassword']) ? $_POST['oldpassword'] : '';
+                $newpassword = isset($_POST['newpassword']) ? $_POST['newpassword'] : '';
+                $confirmpassword = isset($_POST['confirmpassword']) ? $_POST['confirmpassword'] : '';
+                $check_pass = Member::check_password($username, $oldpassword);
+                if (!$oldpassword || !$newpassword || !$confirmpassword) {
+                    $this->msg = "Please provide your informations!";
                 } else {
-                    $change_pass = Member::change_password($username, $newpassword);
-                    if ($change_pass == true) {
-                        $items = Member::get_data($username);
-                        $data = array('$items' => $items);
+                    if (!$check_pass) {
+                        $this->msg = "Invalid password";
+
+                    } elseif ($newpassword != $confirmpassword) {
+                        $this->msg = "Wrong confirm password!";
+                    } else {
+                        $change_pass = Member::change_password($username, $newpassword);
+                        if ($change_pass == true) {
+                            $items = Member::get_data($username);
+                            $data = array('$items' => $items);
 //                    $this->render('user', $data);
 //                    return;
-                        header('Location:index.php?controller=register&action=user&change_pass=success');
+                            header('Location:index.php?controller=register&action=user&change_pass=success');
+                        }
                     }
                 }
+                $items = Member::get_data($_SESSION['name']);
+                $data = array('items' => $items);
+                $this->render('pre_change_pass', $data);
+                return;
             }
             $items = Member::get_data($_SESSION['name']);
             $data = array('items' => $items);
-            $this->render('pre_change_pass', $data);
+            $this->render('user', $data);
             return;
-            }
-        $items = Member::get_data($_SESSION['name']);
-        $data = array('items'=> $items);
-        $this->render('user', $data);
+        }
+        else
+        {
+            header('Location: index.php?controller=pages&action=error');
+        }
     }
     public function logout()
     {
-        $_SESSION["logged"] = false;
-        $this->render('index');
+        if (isset($_SESSION["logged"]) && $_SESSION["logged"]== true)
+        {
+            $_SESSION["logged"] = false;
+            $this->render('index');
+            return;
+        }
+        else
+        {
+            header('Location:index.php?controller=pages&action=error');
+        }
+
     }
 }
 ?>
