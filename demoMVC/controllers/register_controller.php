@@ -14,7 +14,13 @@ class RegisterController extends BaseController
     }
     public function index()
     {
-        $this->render('index');
+        if (isset($_SESSION['name'])) {
+            $items = Member::get_data($_SESSION['name']);
+            $data = array('items' => $items);
+            $this->render('index', $data);
+        }
+        else
+            $this->render('index');
     }
     function is_email($str) {
         return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? false : true;
@@ -62,7 +68,6 @@ class RegisterController extends BaseController
             if(!$username || !$password)
             {
                 $this->msg = "Please provide your informations !";
-                return false;
             }
             else {
                 $user_login = Member::login($username, $password);
@@ -103,7 +108,10 @@ class RegisterController extends BaseController
     }
     public function admin()
     {
-        $this->render('admin');
+//        $this->render('admin');
+        $items = Member::get_data($_GET['username']);
+        $data = array('items'=> $items);
+        $this->render('admin', $data);
     }
     public function user()
     {

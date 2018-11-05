@@ -3,8 +3,14 @@
 //session_start();
 if(isset($_GET['login']) and  ($_GET['login']== 'success'))
 {
-    $msg = 'User '.$_GET['username'].' login successful ';
+    $msg = 'User '.$_SESSION['name'].' login successful ';
     echo '<p>'.$msg.'</p>';
+    echo '<p>YOUR INFORMATION</p>';
+    foreach ($items as $item)
+    {
+        echo '<p>Level: '.$item->level .' </p>';
+        echo '<p>Email: '.$item->email .' </p>';
+    }
 }
 if(isset($_GET['change_pass']) and  $_GET['change_pass']== 'success')
 {

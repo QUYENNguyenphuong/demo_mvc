@@ -25,5 +25,4 @@ else
     $controller = 'pages';
     $action = 'home';
 }
-
 require_once ('routes.php');
