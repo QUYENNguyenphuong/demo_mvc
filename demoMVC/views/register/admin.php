@@ -1,20 +1,22 @@
 <label> Admin Page </label>
-<?php
-foreach ($items as $item) {
-    if (isset($_GET['login']) && ($_GET['login'] == 'success') && $_SESSION['name'] == $item->username) {
-        $msg = 'Admin ' . $_SESSION['name'] . ' login successful';
-        echo '<p>' . $msg . '</p>';
-        echo '<p>YOUR INFORMATION</p>';
-        echo '<p>Level: ' . $item->level . ' </p>';
-        echo '<p>Email: ' . $item->email . ' </p>';
-    }
-    else
-    {
-        header('Location:index.php?controller=pages&action=error');
-    }
-}
-?>
 <br>
-<a href="index.php?controller=posts&action=index"> Post </a>
+<?php foreach ($items as $item): ?>
+    <?php if(isset($item->level) && $item->level == 'admin'): ?>
+        <?php if (isset($_SESSION["logged"]) && ($_SESSION["logged"] == true)): ?>
+            <p>YOUR INFORMATION</p>
+            <p>Level:<?= $item->level ?></p>
+            <p>Email:<?= $item->email?></p>
+            <?php
+            if (isset($_GET['change_pass']) and $_GET['change_pass'] == 'success') {
+                $msg = "Your Password is updated Successfully.";
+                echo '<p>' . $msg . '</p>';
+            }
+            ?>
+            <a href="index.php?controller=register&action=pre_change_pass"> Change password </a>
+            <br>
+            <a href="index.php?controller=posts&action=index"> Posts</a>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endforeach; ?>
 <br>
 <a href="index.php?controller=register&action=index"> index </a>

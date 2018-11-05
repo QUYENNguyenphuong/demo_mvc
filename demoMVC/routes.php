@@ -15,7 +15,7 @@ function call($controller, $action)
             break;
     }
 // call the action
-    $controller->{$action}();
+    $controller->$action();
 }
 $controllers = [
     'pages' => ['home','error'],
@@ -23,10 +23,12 @@ $controllers = [
     'register' => ['index','sign_up','login','logout','user','admin','pre_change_pass']
 ];
 
-if (!isset($controller, $controllers) || (!isset($action,$controllers[$controller])) )
-    {
-        call('pages', 'error');
-    }
- else {
+if (!isset($controller, $controllers) || (!in_array($action,$controllers[$controller])) )
+{
+    call('pages', 'error');
+}
+else {
     call($controller, $action);
 }
+
+

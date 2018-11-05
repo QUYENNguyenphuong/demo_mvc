@@ -46,7 +46,6 @@ class BaseController
                     {
                         $status = 'Guest';
                     }
-
                     if(isset($_SESSION["logged"]) && $_SESSION["logged"] == false)
                     {
                         unset($_SESSION['name']);
