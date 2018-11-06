@@ -18,10 +18,10 @@ class dbCon
         }
         return self::$connection;
     }
-    public static function prepare_sql($sql)
+    public static function prepare_sql($sqlString)
     {
         $conn = self::connect();
-        $result = $conn->prepare($sql);
+        $result = $conn->prepare($sqlString);
         return $result;
     }
     public static function queryExecute($sqlString)
@@ -32,7 +32,6 @@ class dbCon
 
         return $result;
     }
-
     public static function arraySelect($sqlString)
     {
         $rows = array();

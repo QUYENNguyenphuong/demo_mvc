@@ -32,30 +32,44 @@ class Member
     }
     public static function get_data($username)
     {
-        $sql = "SELECT * FROM member WHERE username= '$username'";
-        $query = dbCon::arraySelect($sql);
+        $sql = "SELECT * FROM member WHERE username= ? ";
+        $stmt = dbCon::prepare_sql($sql);
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        $result = $stmt->execute();
+        $stmt_result = $stmt->get_result();
         $list = [];
-        foreach ($query as $item) {
-            $list[] = new Member($item['id'], $item['username'], $item['password'],$item['email'], $item['level']);
+        if ($stmt_result->num_rows > 0) {
+
+            while ($item = $stmt_result->fetch_assoc()) {
+                $list[] = new Member($item['id'], $item['username'], $item['password'],$item['email'], $item['level']);
+            }
         }
         return $list;
     }
     public static function check_user($username)
     {
-        $sql = "SELECT * FROM member WHERE username = '$username'";
-        $query = dbCon::arraySelect($sql);
+        $sql = "SELECT * FROM member WHERE username = ?";
+        $stmt = dbCon::prepare_sql($sql);
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+        $query = mysqli_stmt_fetch($stmt);
         return $query;
     }
     public static function add_member($username, $password,$email, $level)
     {
-        $sql = "INSERT INTO member(username, password, email, level) VALUES ('$username', '$password','$email', '$level')";
-        $result = dbCon::queryExecute($sql);
+        $sql = "INSERT INTO member(username, password, email, level) VALUES (?, ?, ?, ?)";
+        $stmt = dbCon::prepare_sql($sql);
+        mysqli_stmt_bind_param($stmt, "ssss", $username, $password, $email, $level);
+        $result = mysqli_stmt_execute($stmt);
         return $result;
     }
     public static function check_admin($username)
     {
-        $sql = "SELECT * FROM member WHERE username='$username' and level = 'admin'";
-        $kq = dbCon::arraySelect($sql);
+        $sql = "SELECT * FROM member WHERE username= ? and level = 'admin'";
+        $stmt = dbCon::prepare_sql($sql);
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+        $kq = mysqli_stmt_fetch($stmt);
         return $kq;
     }
     public static function login($username, $password)
