@@ -27,9 +27,7 @@ class dbCon
     public static function queryExecute($sqlString)
     {
         $conn = self::connect();
-
         $result = $conn->query($sqlString);
-
         return $result;
     }
     public static function arraySelect($sqlString)

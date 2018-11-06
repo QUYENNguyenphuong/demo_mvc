@@ -35,12 +35,13 @@ class Member
         $sql = "SELECT * FROM member WHERE username= ? ";
         $stmt = dbCon::prepare_sql($sql);
         mysqli_stmt_bind_param($stmt, "s", $username);
-        $result = $stmt->execute();
+        $stmt->execute();
         $stmt_result = $stmt->get_result();
         $list = [];
-        if ($stmt_result->num_rows > 0) {
-
-            while ($item = $stmt_result->fetch_assoc()) {
+        if ($stmt_result->num_rows > 0)
+        {
+            while ($item = $stmt_result->fetch_assoc())
+            {
                 $list[] = new Member($item['id'], $item['username'], $item['password'],$item['email'], $item['level']);
             }
         }
