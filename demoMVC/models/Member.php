@@ -60,21 +60,32 @@ class Member
     }
     public static function login($username, $password)
     {
-        $sql = "SELECT * FROM member WHERE username= '$username' and password ='$password'";
-        $query = dbCon::arraySelect($sql);
-        return $query;
+//         $sql = "SELECT * FROM member WHERE username= '$username' and password = '$password' ";
+//         $query = dbCon::arraySelect($sql);
+//         return $query;
+        $stmt = dbCon::prepare_sql("SELECT * FROM member WHERE username= ? and password = ?");
+        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+        mysqli_stmt_execute($stmt);
+        $row = mysqli_stmt_fetch($stmt);
+        return $row;
     }
     public static function check_password($username,$password)
     {
-        $sql = "SELECT * FROM member WHERE username = '$username' and  password = '$password'";
-        $query = dbCon::arraySelect($sql);
-        return $query;
+//        $sql = "SELECT * FROM member WHERE username = '$username' and  password = '$password'";
+//        $result = dbCon::arraySelect($sql);
+//        return $result;
+        $stmt = dbCon::prepare_sql("SELECT * FROM member WHERE username = ? and  password = ?");
+        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+        mysqli_stmt_execute($stmt);
+        $row = mysqli_stmt_fetch($stmt);
+        return $row;
     }
     public static function change_password($username, $password)
     {
-        $sql = "UPDATE member SET password = '$password'  WHERE username = '$username' ";
-        $k = dbCon::queryExecute($sql);
+        //$sql = "UPDATE member SET password = '?'  WHERE username = '?' ";
+        $stmt = dbCon::prepare_sql("UPDATE member SET password = ?  WHERE username = ? ");
+        mysqli_stmt_bind_param($stmt, "ss", $password, $username);
+        $k = mysqli_stmt_execute($stmt);
         return $k;
     }
-
 }
